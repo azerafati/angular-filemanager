@@ -1,4 +1,5 @@
+.idea/
 /nbproject/private/
 nbproject/
 node_modules/
-target/
+dist/

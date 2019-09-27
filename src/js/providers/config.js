@@ -1,26 +1,26 @@
-(function(angular) {
+(function (angular) {
     'use strict';
-    angular.module('FileManagerApp').provider('fileManagerConfig', function() {
-
+    angular.module('FileManagerApp').provider('fileManagerConfig', function () {
+        var bridgePath = 'bridges/php/handler.php';
         var values = {
-            appName: 'angular-filemanager v1.5',
+            appName: 'angular-filemanager v2.0.0',
             defaultLang: 'en',
             multiLang: true,
-
-            listUrl: 'bridges/php/handler.php',
-            uploadUrl: 'bridges/php/handler.php',
-            renameUrl: 'bridges/php/handler.php',
-            copyUrl: 'bridges/php/handler.php',
-            moveUrl: 'bridges/php/handler.php',
-            removeUrl: 'bridges/php/handler.php',
-            editUrl: 'bridges/php/handler.php',
-            getContentUrl: 'bridges/php/handler.php',
-            createFolderUrl: 'bridges/php/handler.php',
-            downloadFileUrl: 'bridges/php/handler.php',
-            downloadMultipleUrl: 'bridges/php/handler.php',
-            compressUrl: 'bridges/php/handler.php',
-            extractUrl: 'bridges/php/handler.php',
-            permissionsUrl: 'bridges/php/handler.php',
+            bridgePath: bridgePath,
+            listUrl: bridgePath,
+            uploadUrl: bridgePath,
+            renameUrl: bridgePath,
+            copyUrl: bridgePath,
+            moveUrl: bridgePath,
+            removeUrl: bridgePath,
+            editUrl: bridgePath,
+            getContentUrl: bridgePath,
+            createFolderUrl: bridgePath,
+            downloadFileUrl: bridgePath,
+            downloadMultipleUrl: bridgePath,
+            compressUrl: bridgePath,
+            extractUrl: bridgePath,
+            permissionsUrl: bridgePath,
             basePath: '/',
 
             searchForm: true,
@@ -64,11 +64,31 @@
         };
 
         return {
-            $get: function() {
+            $get: function () {
                 return values;
             },
             set: function (constants) {
                 angular.extend(values, constants);
+            },
+            setBridge: function (path) {
+
+                bridgePath = path;
+                values.bridgePath = path;
+                values.listUrl = path;
+                values.uploadUrl = bridgePath;
+                values.renameUrl = bridgePath;
+                values.copyUrl = bridgePath;
+                values.moveUrl = bridgePath;
+                values.removeUrl = bridgePath;
+                values.editUrl = bridgePath;
+                values.getContentUrl = bridgePath;
+                values.createFolderUrl = bridgePath;
+                values.downloadFileUrl = bridgePath;
+                values.downloadMultipleUrl = bridgePath;
+                values.compressUrl = bridgePath;
+                values.extractUrl = bridgePath;
+                values.permissionsUrl = bridgePath;
+
             }
         };
 
