@@ -155,7 +155,7 @@ function logError(error) {
 }
 
 gulp.task('ng-templates', function () {
-    return gulp.src(['assets/app/**/*.html'])
+    return gulp.src(['src/**/*.html'])
         .pipe(htmlmin({
             collapseWhitespace: true,
             removeComments: true,
@@ -166,13 +166,13 @@ gulp.task('ng-templates', function () {
         }))
         .pipe(templateCache({root: '/'}))
         .pipe(replace("angular.module('templates')", 'app'))
-        .pipe(gulp.dest(distributionFolder + 'assets/js'));
+        .pipe(gulp.dest(distributionFolder));
 });
 
 
 gulp.task('concat-ng-templates', function () {
-    return gulp.src(['assets/js/app.js', 'assets/js/templates.js'], {base: distributionFolder, cwd: distributionFolder})
-        .pipe(concat('assets/js/app.js'))
+    return gulp.src(['angular-filemanager.js', 'templates.js'], {base: distributionFolder, cwd: distributionFolder})
+        .pipe(concat('angular-filemanager.js'))
         .pipe(gulp.dest(distributionFolder));
 });
 
@@ -180,8 +180,8 @@ gulp.task('concat-ng-templates', function () {
 gulp.task('scripts-minify', gulp.series('javascript', 'ng-templates', 'concat-ng-templates', function minify(done) {
     // Minify and copy all JavaScript (except vendor scripts)
     // with sourcemaps all the way down
-    del('./' + distributionFolder + 'assets/js/templates.js');
-    return gulp.src(['assets/js/app.js'], {base: distributionFolder, cwd: distributionFolder})
+    del('./' + distributionFolder + 'templates.js');
+    return gulp.src(['angular-filemanager.js'], {base: distributionFolder, cwd: distributionFolder})
         .pipe(iife({
             useStrict: false
         }))
@@ -195,8 +195,7 @@ gulp.task('scripts-minify', gulp.series('javascript', 'ng-templates', 'concat-ng
 
 
 gulp.task('styles-minify', gulp.series(gulp.parallel('scss', 'sprites_icon'), function () {
-    del('./' + distributionFolder + 'assets/css/style.scss');
-    return gulp.src(['assets/css/style.css'], {base: distributionFolder, cwd: distributionFolder})
+    return gulp.src(['angular-filemanager.css'], {base: distributionFolder, cwd: distributionFolder})
     //.pipe(sourcemaps.init())
         .pipe(cleanCSS({
             level: {
@@ -241,7 +240,7 @@ gulp.task('production-replace', function (done) {
 
     var cacheBuster = rndStr();
 
-    return gulp.src(['app/view/fragments/base.php', 'app/view/mainPage.php', 'assets/js/app.js'], {
+    return gulp.src(['index.html', 'angular-filemanager.js'], {
         base: distributionFolder,
         cwd: distributionFolder
     })
