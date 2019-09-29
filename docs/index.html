@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" ng-app="FileManagerApp">
+<head>
+    <!--
+      * Angular FileManager v1.5.1 (https://github.com/joni2back/angular-filemanager)
+      * Jonas Sciangula Street <joni2back@gmail.com>
+      * Licensed under MIT (https://github.com/joni2back/angular-filemanager/blob/master/LICENSE)
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8">
+    <title>angular-filemanager</title>
+
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/dist/angular-filemanager.css" rel="stylesheet">
+
+    <!--Third part libraries-->
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/angular/angular.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/node_modules/angular-translate/dist/angular-translate.min.js"></script>
+    <script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+
+
+    <script src="/dist/angular-filemanager.js"></script>
+
+
+    <!-- build:remove -->
+    <script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.7'><\/script>".replace("HOST", location.hostname));
+    //]]></script>
+    <!-- endbuild -->
+
+
+    <script type="text/javascript">
+        //example to override angular-filemanager default config
+        angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+            var defaults = config.$get();
+            config.setBridge('/bridges/php-local/index.php');
+            config.set({
+                appName: 'angularjs-filemanager',
+                pickCallback: function (item) {
+                    var msg = 'Picked %s "%s" for external use'
+                        .replace('%s', item.type)
+                        .replace('%s', item.fullPath());
+                    window.alert(msg);
+                },
+
+                allowedActions: angular.extend(defaults.allowedActions, {
+                    pickFiles: false,
+                    pickFolders: false,
+                }),
+            });
+        }]);
+    </script>
+</head>
+
+<body class="ng-cloak">
+
+
+<angular-filemanager></angular-filemanager>
+
+
+</body>
+</html>

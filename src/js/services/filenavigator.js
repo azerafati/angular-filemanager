@@ -1,9 +1,7 @@
-(function(angular) {
-    'use strict';
-    angular.module('FileManagerApp').service('fileNavigator', [
-        'apiMiddleware', 'fileManagerConfig', 'item', function (ApiMiddleware, fileManagerConfig, Item) {
+app.service('fileNavigator', [
+    'apiMiddleware', 'fileManagerConfig', 'item', function (ApiMiddleware, fileManagerConfig, Item) {
 
-        var FileNavigator = function() {
+        var FileNavigator = function () {
             this.apiMiddleware = new ApiMiddleware();
             this.requesting = false;
             this.fileList = [];
@@ -11,15 +9,16 @@
             this.history = [];
             this.error = '';
 
-            this.onRefresh = function() {};
+            this.onRefresh = function () {
+            };
         };
 
-        FileNavigator.prototype.getBasePath = function() {
+        FileNavigator.prototype.getBasePath = function () {
             var path = (fileManagerConfig.basePath || '').replace(/^\//, '');
             return path.trim() ? path.split('/') : [];
         };
 
-        FileNavigator.prototype.deferredHandler = function(data, deferred, code, defaultMsg) {
+        FileNavigator.prototype.deferredHandler = function (data, deferred, code, defaultMsg) {
             if (!data || typeof data !== 'object') {
                 this.error = 'Error %s - Bridge response error, please check the API docs or this ajax response.'.replace('%s', code);
             }
@@ -44,30 +43,30 @@
             return deferred.resolve(data);
         };
 
-        FileNavigator.prototype.list = function() {
+        FileNavigator.prototype.list = function () {
             return this.apiMiddleware.list(this.currentPath, this.deferredHandler.bind(this));
         };
 
-        FileNavigator.prototype.refresh = function() {
+        FileNavigator.prototype.refresh = function () {
             var self = this;
-            if (! self.currentPath.length) {
+            if (!self.currentPath.length) {
                 self.currentPath = this.getBasePath();
             }
             var path = self.currentPath.join('/');
             self.requesting = true;
             self.fileList = [];
-            return self.list().then(function(data) {
-                self.fileList = (data.result || []).map(function(file) {
+            return self.list().then(function (data) {
+                self.fileList = (data.result || []).map(function (file) {
                     return new Item(file, self.currentPath);
                 });
                 self.buildTree(path);
                 self.onRefresh();
-            }).finally(function() {
+            }).finally(function () {
                 self.requesting = false;
             });
         };
-        
-        FileNavigator.prototype.buildTree = function(path) {
+
+        FileNavigator.prototype.buildTree = function (path) {
             var flatNodes = [], selectedNode = {};
 
             function recursive(parent, item, path) {
@@ -76,7 +75,7 @@
                     parent.nodes = [];
                 }
                 if (parent.name !== path) {
-                    parent.nodes.forEach(function(nd) {
+                    parent.nodes.forEach(function (nd) {
                         recursive(nd, item, path);
                     });
                 } else {
@@ -87,8 +86,8 @@
                     }
                     parent.nodes.push({item: item, name: absName, nodes: []});
                 }
-                
-                parent.nodes = parent.nodes.sort(function(a, b) {
+
+                parent.nodes = parent.nodes.sort(function (a, b) {
                     return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : a.name.toLowerCase() === b.name.toLowerCase() ? 0 : 1;
                 });
             }
@@ -107,7 +106,7 @@
             }
 
             //!this.history.length && this.history.push({name: '', nodes: []});
-            !this.history.length && this.history.push({ name: this.getBasePath()[0] || '', nodes: [] });
+            !this.history.length && this.history.push({name: this.getBasePath()[0] || '', nodes: []});
             flatten(this.history[0], flatNodes);
             selectedNode = findNode(flatNodes, path);
             selectedNode && (selectedNode.nodes = []);
@@ -118,7 +117,7 @@
             }
         };
 
-        FileNavigator.prototype.folderClick = function(item) {
+        FileNavigator.prototype.folderClick = function (item) {
             this.currentPath = [];
             if (item && item.isFolder()) {
                 this.currentPath = item.model.fullPath().split('/').splice(1);
@@ -126,34 +125,33 @@
             this.refresh();
         };
 
-        FileNavigator.prototype.upDir = function() {
+        FileNavigator.prototype.upDir = function () {
             if (this.currentPath[0]) {
                 this.currentPath = this.currentPath.slice(0, -1);
                 this.refresh();
             }
         };
 
-        FileNavigator.prototype.goTo = function(index) {
+        FileNavigator.prototype.goTo = function (index) {
             this.currentPath = this.currentPath.slice(0, index + 1);
             this.refresh();
         };
 
-        FileNavigator.prototype.fileNameExists = function(fileName) {
-            return this.fileList.find(function(item) {
+        FileNavigator.prototype.fileNameExists = function (fileName) {
+            return this.fileList.find(function (item) {
                 return fileName && item.model.name.trim() === fileName.trim();
             });
         };
 
-        FileNavigator.prototype.listHasFolders = function() {
-            return this.fileList.find(function(item) {
+        FileNavigator.prototype.listHasFolders = function () {
+            return this.fileList.find(function (item) {
                 return item.model.type === 'dir';
             });
         };
 
-        FileNavigator.prototype.getCurrentFolderName = function() {
+        FileNavigator.prototype.getCurrentFolderName = function () {
             return this.currentPath.slice(-1)[0] || '/';
         };
 
         return FileNavigator;
     }]);
-})(angular);

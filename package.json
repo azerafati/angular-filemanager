@@ -1,14 +1,16 @@
 {
-  "name": "angular-filemanager",
-  "version": "2.0.0",
+  "name": "@azerafati/angularjs-filemanager",
+  "version": "2.0.1",
   "description": "A very smart filemanager to manage your files in the browser.",
-  "main": "src/app.js",
+  "main": "src/js/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "/usr/bin/php -S localhost:8080 & gulp",
+    "distribute": "gulp distribute"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joni2back/angular-filemanager.git"
+    "url": "git+https://github.com/azerafati/angularjs-filemanager.git"
   },
   "keywords": [
     "filemanager"
@@ -18,7 +20,10 @@
   "bugs": {
     "url": "https://github.com/azerafati/angular-filemanager/issues"
   },
-  "homepage": "https://github.com/azerafati/angular-filemanager#readme",
+  "files": [
+    "dist/*"
+  ],
+  "homepage": "https://angularjs-filemanager.azerafati.com/",
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",

@@ -1,17 +1,15 @@
-(function(angular) {
-    'use strict';
-    angular.module('FileManagerApp').service('apiHandler', ['$http', '$q', '$window', '$translate', '$httpParamSerializer', 'Upload',
-        function ($http, $q, $window, $translate, $httpParamSerializer, Upload) {
+app.service('apiHandler', ['$http', '$q', '$window', '$translate', '$httpParamSerializer', 'Upload',
+    function ($http, $q, $window, $translate, $httpParamSerializer, Upload) {
 
         $http.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-        var ApiHandler = function() {
+        var ApiHandler = function () {
             this.inprocess = false;
             this.asyncSuccess = false;
             this.error = '';
         };
 
-        ApiHandler.prototype.deferredHandler = function(data, deferred, code, defaultMsg) {
+        ApiHandler.prototype.deferredHandler = function (data, deferred, code, defaultMsg) {
             if (!data || typeof data !== 'object') {
                 this.error = 'Error %s - Bridge response error, please check the API docs or this ajax response.'.replace('%s', code);
             }
@@ -33,7 +31,7 @@
             return deferred.resolve(data);
         };
 
-        ApiHandler.prototype.list = function(apiUrl, path, customDeferredHandler, exts) {
+        ApiHandler.prototype.list = function (apiUrl, path, customDeferredHandler, exts) {
             var self = this;
             var dfHandler = customDeferredHandler || self.deferredHandler;
             var deferred = $q.defer();
@@ -46,17 +44,17 @@
             self.inprocess = true;
             self.error = '';
 
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 dfHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 dfHandler(response.data, deferred, response.status, 'Unknown error listing, check the response');
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.copy = function(apiUrl, items, path, singleFilename) {
+        ApiHandler.prototype.copy = function (apiUrl, items, path, singleFilename) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -71,17 +69,17 @@
 
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_copying'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.move = function(apiUrl, items, path) {
+        ApiHandler.prototype.move = function (apiUrl, items, path) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -91,17 +89,17 @@
             };
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_moving'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.remove = function(apiUrl, items) {
+        ApiHandler.prototype.remove = function (apiUrl, items) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -111,17 +109,17 @@
 
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_deleting'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.upload = function(apiUrl, destination, files) {
+        ApiHandler.prototype.upload = function (apiUrl, destination, files) {
             var self = this;
             var deferred = $q.defer();
             self.inprocess = true;
@@ -146,7 +144,7 @@
                     self.deferredHandler(data.data, deferred, data.status, 'Unknown error uploading files');
                 }, function (evt) {
                     self.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total)) - 1;
-                })['finally'](function() {
+                })['finally'](function () {
                     self.inprocess = false;
                     self.progress = 0;
                 });
@@ -155,7 +153,7 @@
             return deferred.promise;
         };
 
-        ApiHandler.prototype.getContent = function(apiUrl, itemPath) {
+        ApiHandler.prototype.getContent = function (apiUrl, itemPath) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -165,17 +163,17 @@
 
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_getting_content'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.edit = function(apiUrl, itemPath, content) {
+        ApiHandler.prototype.edit = function (apiUrl, itemPath, content) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -187,17 +185,17 @@
             self.inprocess = true;
             self.error = '';
 
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_modifying'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.rename = function(apiUrl, itemPath, newPath) {
+        ApiHandler.prototype.rename = function (apiUrl, itemPath, newPath) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -207,17 +205,17 @@
             };
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_renaming'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.getUrl = function(apiUrl, path) {
+        ApiHandler.prototype.getUrl = function (apiUrl, path) {
             var data = {
                 action: 'download',
                 path: path
@@ -225,7 +223,7 @@
             return path && [apiUrl, $httpParamSerializer(data)].join('?');
         };
 
-        ApiHandler.prototype.download = function(apiUrl, itemPath, toFilename, downloadByAjax, forceNewWindow) {
+        ApiHandler.prototype.download = function (apiUrl, itemPath, toFilename, downloadByAjax, forceNewWindow) {
             var self = this;
             var url = this.getUrl(apiUrl, itemPath);
 
@@ -236,19 +234,19 @@
 
             var deferred = $q.defer();
             self.inprocess = true;
-            $http.get(url).then(function(response) {
+            $http.get(url).then(function (response) {
                 var bin = new $window.Blob([response.data]);
                 deferred.resolve(response.data);
                 $window.saveAs(bin, toFilename);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_downloading'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.downloadMultiple = function(apiUrl, items, toFilename, downloadByAjax, forceNewWindow) {
+        ApiHandler.prototype.downloadMultiple = function (apiUrl, items, toFilename, downloadByAjax, forceNewWindow) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -264,19 +262,19 @@
             }
 
             self.inprocess = true;
-            $http.get(apiUrl).then(function(response) {
+            $http.get(apiUrl).then(function (response) {
                 var bin = new $window.Blob([response.data]);
                 deferred.resolve(response.data);
                 $window.saveAs(bin, toFilename);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_downloading'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.compress = function(apiUrl, items, compressedFilename, path) {
+        ApiHandler.prototype.compress = function (apiUrl, items, compressedFilename, path) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -288,17 +286,17 @@
 
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_compressing'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.extract = function(apiUrl, item, folderName, path) {
+        ApiHandler.prototype.extract = function (apiUrl, item, folderName, path) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -310,17 +308,17 @@
 
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_extracting'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.changePermissions = function(apiUrl, items, permsOctal, permsCode, recursive) {
+        ApiHandler.prototype.changePermissions = function (apiUrl, items, permsOctal, permsCode, recursive) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -333,17 +331,17 @@
 
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_changing_perms'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
             return deferred.promise;
         };
 
-        ApiHandler.prototype.createFolder = function(apiUrl, path) {
+        ApiHandler.prototype.createFolder = function (apiUrl, path) {
             var self = this;
             var deferred = $q.defer();
             var data = {
@@ -353,11 +351,11 @@
 
             self.inprocess = true;
             self.error = '';
-            $http.post(apiUrl, data).then(function(response) {
+            $http.post(apiUrl, data).then(function (response) {
                 self.deferredHandler(response.data, deferred, response.status);
-            }, function(response) {
+            }, function (response) {
                 self.deferredHandler(response.data, deferred, response.status, $translate.instant('error_creating_folder'));
-            })['finally'](function() {
+            })['finally'](function () {
                 self.inprocess = false;
             });
 
@@ -367,4 +365,3 @@
         return ApiHandler;
 
     }]);
-})(angular);

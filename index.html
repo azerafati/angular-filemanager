@@ -11,7 +11,7 @@
     <title>angular-filemanager</title>
 
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/dist/angular-filemanager.css" rel="stylesheet">
+    <link href="/dist/angularjs-filemanager.css" rel="stylesheet">
 
     <!--Third part libraries-->
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
@@ -21,7 +21,7 @@
     <script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
 
 
-    <script src="/dist/angular-filemanager.js"></script>
+    <script src="/dist/angularjs-filemanager.js"></script>
 
 
     <!-- build:remove -->
@@ -37,7 +37,7 @@
             var defaults = config.$get();
             config.setBridge('/bridges/php-local/index.php');
             config.set({
-                appName: 'angular-filemanager',
+                appName: 'angularjs-filemanager',
                 pickCallback: function (item) {
                     var msg = 'Picked %s "%s" for external use'
                         .replace('%s', item.type)

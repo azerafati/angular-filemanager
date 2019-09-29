@@ -1,21 +1,64 @@
-## Update Dec 2018
-Hi!, I am moving the project from AngularJS to **React + Redux** [(react-filemanager)](https://github.com/joni2back/react-filemanager), it's very important for me your collaboration on my development tasks and time. Please help me to move forward with a donation by paypal :) [![Donate](https://www.paypal.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XRB7EW72PS982) 
 
----
+# AngularJS File Manager
 
-# angular-filemanager
+This is a pretty handy file manager to explore your files on the server in the browser developed in AngularJS using Bootstrap 4
 
-A very smart filemanager to manage your files in the browser developed in AngularJS following Material Design styles by [Jonas Sciangula Street](https://github.com/joni2back)
+This project is based on excellent work of [Jonas Sciangula Street](https://github.com/joni2back), but since he's not planning to maintain it I'm moving forward with my own fork. provides a web file manager interface, **allowing you to create your own backend connector** following the [connector API](API.md). 
 
-This project provides a web file manager interface, **allowing you to create your own backend connector** following the [connector API](API.md). 
 *By the way, we provide some example backend connectors in many languages as example (php-ftp, php-local, python, etc)*
 
-[![Build Status](https://travis-ci.org/joni2back/angular-filemanager.svg?branch=master)](https://travis-ci.org/joni2back/angular-filemanager)
+[![Build Status](https://travis-ci.org/azerafati/angularjs-filemanager.svg?branch=master)](https://travis-ci.org/azerafati/angularjs-filemanager)
 
 
-#### [Try the DEMO](http://angular-filemanager.zendelsolutions.com/)
+### [Try the DEMO](https://angularjs-filemanager.azerafati.com/)
 ---------
-![](https://raw.githubusercontent.com/joni2back/angular-filemanager/master/screenshot.gif)
+
+### Install
+
+   **1) Run `npm i @azerafati/angularjs-filemanager --save`**
+   
+   **2) Install dependencies**
+   
+   **3) Include the dependencies in your project**
+   ```html
+   <!-- third party -->
+     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+     <script src="/node_modules/angular/angular.min.js"></script>
+     <script src="/node_modules/angular-translate/dist/angular-translate.min.js"></script>
+     <script src="/node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
+     <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+   
+   <!-- angularjs-filemanager -->
+     <link rel="stylesheet" href="/node_modules/@azerafati/angularjs-filemanager/dist/angular-filemanager.css">
+     <script src="node_modules/@azerafati/angularjs-filemanager/dist/angular-filemanager.js"></script>
+   ```
+**4) Use the angular directive in your HTML**
+```html
+<angular-filemanager></angular-filemanager>
+```    
+   ```html
+   <script type="text/javascript">
+   angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+     var defaults = config.$get();
+     config.set({
+       appName: 'angular-filemanager',
+       pickCallback: function(item) {
+         var msg = 'Picked %s "%s" for external use'
+           .replace('%s', item.type)
+           .replace('%s', item.fullPath());
+         window.alert(msg);
+       },
+   
+       allowedActions: angular.extend(defaults.allowedActions, {
+         pickFiles: true,
+         pickFolders: false,
+       }),
+     });
+   }]);
+   </script>
+   ```
+
+---------
 
 ### Features
   - Multiple file support
@@ -39,55 +82,6 @@ This project provides a web file manager interface, **allowing you to create you
 [Read the docs](API.md)
 
 ---------
-
-### Using in your existing project
-**1) Install deps using yarn with**
-```yarn install```
-
-**2) Include the dependencies in your project**
-```html
-<!-- third party -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
-  <script src="node_modules/ng-file-upload/dist/ng-file-upload.min.js"></script>
-  <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="node_modules/bootswatch/paper/bootstrap.min.css" />
-
-<!-- angular-filemanager -->
-  <link rel="stylesheet" href="dist/angular-filemanager.min.css">
-  <script src="dist/angular-filemanager.min.js"></script>
-```
-
-**3) Use the angular directive in your HTML**
-```html
-<angular-filemanager></angular-filemanager>
-```
-
----------
-
-### Extending the configuration file by adding a script
-```html
-<script type="text/javascript">
-angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
-  var defaults = config.$get();
-  config.set({
-    appName: 'angular-filemanager',
-    pickCallback: function(item) {
-      var msg = 'Picked %s "%s" for external use'
-        .replace('%s', item.type)
-        .replace('%s', item.fullPath());
-      window.alert(msg);
-    },
-
-    allowedActions: angular.extend(defaults.allowedActions, {
-      pickFiles: true,
-      pickFolders: false,
-    }),
-  });
-}]);
-</script>
-```
 
 ### Create a new build with your changes
 ```sh

@@ -9,5 +9,5 @@
 
 * ${pkg.name}
 * @version v${pkg.version}
-* @website ${pkg.refer}
+* @website ${pkg.homepage}
 */

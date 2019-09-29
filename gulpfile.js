@@ -25,6 +25,7 @@ gulp.task('clean', function () {
     return del('./' + distributionFolder + '**');
 });
 
+/*
 gulp.task('copy-files', function () {
     return gulp.src([
         'index.html',
@@ -32,6 +33,7 @@ gulp.task('copy-files', function () {
     ], {base: ".", nodir: true})
         .pipe(gulp.dest(distributionFolder));
 });
+*/
 
 
 // Static server
@@ -52,7 +54,7 @@ gulp.task('javascript', function (done) {
 
     return gulp.src(sources, {base: '.'})
         .pipe(sourcemaps.init())
-        .pipe(concat('angular-filemanager.js'))
+        .pipe(concat('angularjs-filemanager.js'))
         .on('error', logError)
         .pipe(babel({presets: ['@babel/env']}))
         .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/'}))
@@ -67,7 +69,7 @@ gulp.task('scss', function () {
         .on('error', logError)
         // since gulp-sass doesn't let you rename the file
         .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/src/css'}))
-        .pipe(concat('angular-filemanager.css'))
+        .pipe(concat('angularjs-filemanager.css'))
         .pipe(gulp.dest(distributionFolder))
         .pipe(browserSync.stream());
 });
@@ -96,13 +98,13 @@ let svgIconConfig = {
             common: 'svg',
             bust: false,
             dimensions: false,
-            sprite: 'angular-filemanager.svg',
+            sprite: 'angularjs-filemanager.svg',
             //example: true,
             render: {
                 css: false
             },
             inline: true,
-            dest:""
+            dest: ""
         }
     },
     svg: {							// General options for created SVG files
@@ -164,6 +166,7 @@ gulp.task('ng-templates', function () {
             ignoreCustomFragments: [/<%[\s\S]*?%>/, /<\?[\s\S]*?(\?>|$)/],
             trimCustomFragments: true
         }))
+        .pipe(gulp.src(distributionFolder + "angularjs-filemanager.svg"))
         .pipe(templateCache({root: '/'}))
         .pipe(replace("angular.module('templates')", 'app'))
         .pipe(gulp.dest(distributionFolder));
@@ -171,17 +174,17 @@ gulp.task('ng-templates', function () {
 
 
 gulp.task('concat-ng-templates', function () {
-    return gulp.src(['angular-filemanager.js', 'templates.js'], {base: distributionFolder, cwd: distributionFolder})
-        .pipe(concat('angular-filemanager.js'))
+    return gulp.src(['angularjs-filemanager.js', 'templates.js'], {base: distributionFolder, cwd: distributionFolder})
+        .pipe(concat('angularjs-filemanager.js'))
         .pipe(gulp.dest(distributionFolder));
 });
 
 
-gulp.task('scripts-minify', gulp.series('javascript', 'ng-templates', 'concat-ng-templates', function minify(done) {
+gulp.task('scripts-minify', gulp.series('javascript', 'sprites_icon', 'ng-templates', 'concat-ng-templates', function minify(done) {
     // Minify and copy all JavaScript (except vendor scripts)
     // with sourcemaps all the way down
     del('./' + distributionFolder + 'templates.js');
-    return gulp.src(['angular-filemanager.js'], {base: distributionFolder, cwd: distributionFolder})
+    return gulp.src(['angularjs-filemanager.js'], {base: distributionFolder, cwd: distributionFolder})
         .pipe(iife({
             useStrict: false
         }))
@@ -194,8 +197,8 @@ gulp.task('scripts-minify', gulp.series('javascript', 'ng-templates', 'concat-ng
 }));
 
 
-gulp.task('styles-minify', gulp.series(gulp.parallel('scss', 'sprites_icon'), function () {
-    return gulp.src(['angular-filemanager.css'], {base: distributionFolder, cwd: distributionFolder})
+gulp.task('styles-minify', gulp.series(gulp.parallel('scss'), function () {
+    return gulp.src(['angularjs-filemanager.css'], {base: distributionFolder, cwd: distributionFolder})
     //.pipe(sourcemaps.init())
         .pipe(cleanCSS({
             level: {
@@ -215,39 +218,13 @@ gulp.task('styles-minify', gulp.series(gulp.parallel('scss', 'sprites_icon'), fu
 }));
 
 
-gulp.task('html-minify', function () {
-    return gulp.src(['index.html'], {base: distributionFolder, cwd: distributionFolder})
-        .pipe(htmlmin({
-            collapseWhitespace: true,
-            removeComments: true,
-            sortAttributes: true,
-            sortClassName: true,
-            ignoreCustomFragments: [/<%[\s\S]*?%>/, /<\?[\s\S]*?(\?>|$)/],
-            trimCustomFragments: true
-        }))
-        .pipe(gulp.dest(distributionFolder));
-});
-
-
 gulp.task('production-replace', function (done) {
-    function rndStr() {
-        var x = '';
-        while (x.length != 5) {
-            x = Math.random().toString(36).substring(7).substr(0, 5);
-        }
-        return x;
-    }
 
-    var cacheBuster = rndStr();
-
-    return gulp.src(['index.html', 'angular-filemanager.js'], {
+    return gulp.src(['angularjs-filemanager.css', 'angularjs-filemanager.js'], {
         base: distributionFolder,
         cwd: distributionFolder
     })
     //adding version to stop caching
-        .pipe(replace('js/app.js', 'js/app.js?cs=' + cacheBuster))
-        .pipe(replace('css/style.css', 'css/style.css?cs=' + cacheBuster))
-
         .pipe(replace('debugInfoEnabled(!0)', 'debugInfoEnabled(false)'))
         .pipe(replace('[[version]]', package.version))
         .pipe(replace(/<ng-include src="'(.*?\.svg)'"><\/ng-include>/g, function (match, p1) {
@@ -262,12 +239,15 @@ gulp.task('production-replace', function (done) {
 
 });
 
-gulp.task('distribute', gulp.series('clean', 'copy-files',
+gulp.task('distribute', gulp.series('clean',
     gulp.parallel('styles-minify', 'scripts-minify'),
-    gulp.parallel('html-minify'),
     'production-replace'
-    )
-);
+    , function () {
+        // clean up extras
+        del(distributionFolder + 'angularjs-filemanager.svg');
+        return del(distributionFolder + 'angularjs-filemanager.svg');
+    }
+));
 
 
 gulp.task('lint', function () {

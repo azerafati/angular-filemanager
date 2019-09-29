@@ -6,10 +6,10 @@
     <button ng-click="fileNavigator.folderClick(item.item)" class="btn-block btn btn-light text-left animated fast fadeInDown " ng-class="{'active': item.name == fileNavigator.currentPath.join('/')}">
 
         <span class="point">
-            <svg class="icon" ng-show="isInThisPath(item.name)">
+            <svg class="icon chevron" ng-show="isInThisPath(item.name)">
                 <use xlink:href="#svg-chevron-down"></use>
             </svg>
-            <svg class="icon r-270" ng-show="!isInThisPath(item.name)">
+            <svg class="icon chevron r-270" ng-show="!isInThisPath(item.name)">
                 <use xlink:href="#svg-chevron-down"></use>
             </svg>
         </span>
