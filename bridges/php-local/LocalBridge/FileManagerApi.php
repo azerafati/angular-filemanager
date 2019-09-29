@@ -277,7 +277,7 @@
 			$files = array_values(array_filter(
 				scandir($this->basePath . $path),
 				function ($path) {
-					return !($path === '.' || $path === '..');
+					return !($path === '.' || $path === '..'|| $path === '.htaccess');
 				}
 			));
 
@@ -285,7 +285,9 @@
 				$file = $this->canonicalizePath(
 					$this->basePath . $path . DIRECTORY_SEPARATOR . $file
 				);
-				$date = new \DateTime('@' . filemtime($file));
+				$date = new \DateTime();
+				$date->setTimestamp(filemtime($file));
+
 
 				return [
 					'name' => basename($file),

@@ -166,8 +166,7 @@ gulp.task('ng-templates', function () {
             ignoreCustomFragments: [/<%[\s\S]*?%>/, /<\?[\s\S]*?(\?>|$)/],
             trimCustomFragments: true
         }))
-        .pipe(gulp.src(distributionFolder + "angularjs-filemanager.svg"))
-        .pipe(templateCache({root: '/'}))
+        .pipe(templateCache({root: 'src/'}))
         .pipe(replace("angular.module('templates')", 'app'))
         .pipe(gulp.dest(distributionFolder));
 });
@@ -227,7 +226,7 @@ gulp.task('production-replace', function (done) {
     //adding version to stop caching
         .pipe(replace('debugInfoEnabled(!0)', 'debugInfoEnabled(false)'))
         .pipe(replace('[[version]]', package.version))
-        .pipe(replace(/<ng-include src="'(.*?\.svg)'"><\/ng-include>/g, function (match, p1) {
+        .pipe(replace(/<ng-include src="\\'(.*?\.svg)\\'"><\/ng-include>/g, function (match, p1) {
             const svg = fs.readFileSync(path.resolve('.' + p1));
             del('.' + p1);
             return svg;
@@ -242,11 +241,6 @@ gulp.task('production-replace', function (done) {
 gulp.task('distribute', gulp.series('clean',
     gulp.parallel('styles-minify', 'scripts-minify'),
     'production-replace'
-    , function () {
-        // clean up extras
-        del(distributionFolder + 'angularjs-filemanager.svg');
-        return del(distributionFolder + 'angularjs-filemanager.svg');
-    }
 ));
 
 

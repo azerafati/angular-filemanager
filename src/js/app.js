@@ -1,4 +1,4 @@
-var app = angular.module('FileManagerApp', ['pascalprecht.translate', 'ngFileUpload']);
+const app = angular.module('FileManagerApp', ['pascalprecht.translate', 'ngFileUpload']);
 
 /**
  * jQuery inits
