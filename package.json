@@ -1,6 +1,6 @@
 {
   "name": "@azerafati/angularjs-filemanager",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A very smart filemanager to manage your files in the browser.",
   "main": "src/js/app.js",
   "scripts": {

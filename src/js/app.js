@@ -10,11 +10,11 @@ angular.element(window.document).on('shown.bs.modal', '.modal', function () {
 });
 
 angular.element(window.document).on('click', function () {
-    angular.element('#context-menu').hide();
+    angular.element('#angularjs-filemanager-context-menu').hide();
 });
 
 angular.element(window.document).on('contextmenu', '.main-navigation .table-files tr.item-list:has("td"), .item-list', function (e) {
-    var menu = angular.element('#context-menu');
+    var menu = angular.element('#angularjs-filemanager-context-menu');
 
     if (e.pageX >= window.innerWidth - menu.width()) {
         e.pageX -= menu.width();
@@ -29,27 +29,3 @@ angular.element(window.document).on('contextmenu', '.main-navigation .table-file
     }).appendTo('body').show();
     e.preventDefault();
 });
-
-if (!Array.prototype.find) {
-    Array.prototype.find = function (predicate) {
-        if (this == null) {
-            throw new TypeError('Array.prototype.find called on null or undefined');
-        }
-        if (typeof predicate !== 'function') {
-            throw new TypeError('predicate must be a function');
-        }
-        var list = Object(this);
-        var length = list.length >>> 0;
-        var thisArg = arguments[1];
-        var value;
-
-        for (var i = 0; i < length; i++) {
-            value = list[i];
-            if (predicate.call(thisArg, value, i, list)) {
-                return value;
-            }
-        }
-        return undefined;
-    };
-}
-

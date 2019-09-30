@@ -52,11 +52,37 @@
             });
         }]);
     </script>
+
+    <style>
+        body {
+            max-height: 100vh;
+            background-color: #cdcdcd;
+        }
+
+
+    </style>
+
+
 </head>
 
-<body class="ng-cloak">
+<body>
 
-<angularjs-filemanager></angularjs-filemanager>
+<div class="container"> <!--better for a real life use case-->
+    <div class="row">
+        <div class="col-12">
+            <div class="card my-5">
+                <div class="card-header">
+                    Sample Wrapper
+                </div>
+                <div class="card-body p-0" style="height: 600px">
+                    <angularjs-filemanager></angularjs-filemanager>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 
 
 </body>

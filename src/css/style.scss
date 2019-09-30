@@ -1,4 +1,44 @@
 @import "animations";
-@import "dialogs";
-@import "main";
-@import "sprite";
+
+angularjs-filemanager { // name-spacing all the styles prevents conflicts when imported in other projects
+
+  @import "variables";
+  @import "dialogs";
+  @import "main";
+  @import "sprite";
+
+  position: relative;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  color: $text-color;
+  a {
+    color: $text-color;
+  }
+
+}
+
+#angularjs-filemanager-context-menu {
+  position: absolute;
+  display: none;
+  z-index: 9999;
+
+  .dropdown-menu > li > a {
+    padding: 6px 20px;
+  }
+
+  .dropdown-menu > li > a > i {
+    margin-right: 4px;
+  }
+
+  .dropdown-menu.dropdown-right-click {
+    display: block;
+    position: static;
+    margin-bottom: 5px;
+  }
+
+  .dropdown-menu.dropdown-right-click .divider {
+    margin: 3px 0;
+  }
+
+}

@@ -39,6 +39,7 @@ This project is based on excellent work of [Jonas Sciangula Street](https://gith
    ```javascript
    angular.module('AngularJS-FileManager').config(['fileManagerConfigProvider', function (config) {
      var defaults = config.$get();
+     config.setBridge('/bridges/php-local/index.php');
      config.set({
        appName: 'AngularJS File Manager',
        pickCallback: function(item) {
