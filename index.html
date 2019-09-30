@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="FileManagerApp">
+<html lang="en" ng-app="AngularJS-FileManager">
 <head>
     <!--
       * Angular FileManager v1.5.1 (https://github.com/joni2back/angular-filemanager)
@@ -33,11 +33,11 @@
 
     <script type="text/javascript">
         //example to override angular-filemanager default config
-        angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+        angular.module('AngularJS-FileManager').config(['fileManagerConfigProvider', function (config) {
             var defaults = config.$get();
             config.setBridge('/bridges/php-local/index.php');
             config.set({
-                appName: 'angularjs-filemanager',
+                appName: 'AngularJS File Manager',
                 pickCallback: function (item) {
                     var msg = 'Picked %s "%s" for external use'
                         .replace('%s', item.type)
@@ -56,7 +56,7 @@
 
 <body class="ng-cloak">
 
-<angular-filemanager></angular-filemanager>
+<angularjs-filemanager></angularjs-filemanager>
 
 
 </body>

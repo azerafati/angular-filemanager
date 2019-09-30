@@ -1,7 +1,7 @@
 app.provider('fileManagerConfig', function () {
     var bridgePath = 'bridges/php/handler.php';
     var values = {
-        appName: 'angular-filemanager v2.0.0',
+        appName: 'AngularJS File Manager',
         defaultLang: 'en',
         multiLang: true,
         bridgePath: bridgePath,

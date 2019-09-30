@@ -34,14 +34,13 @@ This project is based on excellent work of [Jonas Sciangula Street](https://gith
    ```
 **4) Use the angular directive in your HTML**
 ```html
-<angular-filemanager></angular-filemanager>
+<angularjs-filemanager></angularjs-filemanager>
 ```    
-   ```html
-   <script type="text/javascript">
-   angular.module('FileManagerApp').config(['fileManagerConfigProvider', function (config) {
+   ```javascript
+   angular.module('AngularJS-FileManager').config(['fileManagerConfigProvider', function (config) {
      var defaults = config.$get();
      config.set({
-       appName: 'angular-filemanager',
+       appName: 'AngularJS File Manager',
        pickCallback: function(item) {
          var msg = 'Picked %s "%s" for external use'
            .replace('%s', item.type)
@@ -55,7 +54,6 @@ This project is based on excellent work of [Jonas Sciangula Street](https://gith
        }),
      });
    }]);
-   </script>
    ```
 
 ---------
