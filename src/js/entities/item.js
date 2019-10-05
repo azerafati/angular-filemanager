@@ -10,9 +10,12 @@ app.factory('item', ['fileManagerConfig', 'chmod', function (fileManagerConfig, 
             perms: new Chmod(model && model.rights),
             content: model && model.content || '',
             recursive: false,
-            fullPath: function () {
+            relativePath: function () {
                 var path = this.path.filter(Boolean);
-                return (fileManagerConfig.serverUrl + '/' + path.join('/') + '/' + this.name).replace(/\/\//, '/');
+                return ('/' + path.join('/') + '/' + this.name).replace(/\/\//, '/');
+            },
+            fullPath: function () {
+                return (fileManagerConfig.serverUrl + this.relativePath());
             }
         };
 

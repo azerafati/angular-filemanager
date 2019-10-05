@@ -221,7 +221,7 @@
                     <h4 class="modal-title">{{'edit_file' | translate}}</h4>
                 </div>
                 <div class="modal-body">
-                    <label class="radio bold">{{ singleSelection().model.fullPath() }}</label>
+                    <label class="radio bold">{{ singleSelection().model.relativePath() }}</label>
                     <span class="label label-warning" ng-show="apiMiddleware.apiHandler.inprocess">{{'loading' | translate}} ...</span>
                     <textarea class="form-control code" ng-model="singleSelection().tempModel.content" ng-show="!apiMiddleware.apiHandler.inprocess" autofocus="autofocus"></textarea>
                     <div ng-include data-src="'error-bar'" class="clearfix"></div>

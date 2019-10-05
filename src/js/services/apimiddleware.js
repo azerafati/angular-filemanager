@@ -11,12 +11,12 @@ app.service('apiMiddleware', ['$window', 'fileManagerConfig', 'apiHandler',
 
         ApiMiddleware.prototype.getFileList = function (files) {
             return (files || []).map(function (file) {
-                return file && file.model.fullPath();
+                return file && file.model.relativePath();
             });
         };
 
         ApiMiddleware.prototype.getFilePath = function (item) {
-            return item && item.model.fullPath();
+            return item && item.model.relativePath();
         };
 
         ApiMiddleware.prototype.list = function (path, customDeferredHandler) {
@@ -61,7 +61,7 @@ app.service('apiMiddleware', ['$window', 'fileManagerConfig', 'apiHandler',
 
         ApiMiddleware.prototype.rename = function (item) {
             var itemPath = this.getFilePath(item);
-            var newPath = item.tempModel.fullPath();
+            var newPath = item.tempModel.relativePath();
 
             return this.apiHandler.rename(fileManagerConfig.renameUrl, itemPath, newPath);
         };
@@ -123,7 +123,7 @@ app.service('apiMiddleware', ['$window', 'fileManagerConfig', 'apiHandler',
         };
 
         ApiMiddleware.prototype.createFolder = function (item) {
-            var path = item.tempModel.fullPath();
+            var path = item.tempModel.relativePath();
             return this.apiHandler.createFolder(fileManagerConfig.createFolderUrl, path);
         };
 

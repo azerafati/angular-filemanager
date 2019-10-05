@@ -120,7 +120,7 @@ app.service('fileNavigator', [
         FileNavigator.prototype.folderClick = function (item) {
             this.currentPath = [];
             if (item && item.isFolder()) {
-                this.currentPath = item.model.fullPath().split('/').splice(1);
+                this.currentPath = item.model.relativePath().split('/').splice(1);
             }
             this.refresh();
         };

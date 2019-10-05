@@ -12,7 +12,7 @@ app.controller('ModalFileManagerCtrl',
         };
 
         $scope.select = function (item) {
-            $rootScope.selectedModalPath = item.model.fullPath().split('/').filter(Boolean);
+            $rootScope.selectedModalPath = item.model.relativePath().split('/').filter(Boolean);
             $scope.modal('selector', true);
         };
 
@@ -22,9 +22,9 @@ app.controller('ModalFileManagerCtrl',
         };
 
         $scope.selectedFilesAreChildOfPath = function (item) {
-            var path = item.model.fullPath();
+            var path = item.model.relativePath();
             return $scope.temps.find(function (item) {
-                var itemPath = item.model.fullPath();
+                var itemPath = item.model.relativePath();
                 if (path === itemPath) {
                     return true;
                 }
