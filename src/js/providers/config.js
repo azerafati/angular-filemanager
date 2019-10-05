@@ -20,6 +20,7 @@ app.provider('fileManagerConfig', function () {
         extractUrl: bridgePath,
         permissionsUrl: bridgePath,
         basePath: '/',
+        serverUrl: '', // leading string in building public path for files (e.g. https://example.com/uploads)
 
         searchForm: true,
         sidebar: true,
@@ -43,7 +44,7 @@ app.provider('fileManagerConfig', function () {
             pickFolders: false
         },
 
-        multipleDownloadFileName: 'angular-filemanager.zip',
+        multipleDownloadFileName: 'angularjs-filemanager.zip',
         filterFileExtensions: [],
         showExtensionIcons: true,
         showSizeForDirectories: false,

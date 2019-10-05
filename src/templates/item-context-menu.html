@@ -5,7 +5,7 @@
             <i class="glyphicon glyphicon-folder-open"></i> {{'open' | translate}}
         </button>
 
-        <button class="dropdown-item" tabindex="-1" ng-show="config.pickCallback && singleSelection() && singleSelection().isSelectable()" ng-click="config.pickCallback(singleSelection().model)">
+        <button class="dropdown-item" tabindex="-1" ng-show="config.pickCallback && singleSelection() && singleSelection().isSelectable()" ng-click="onSelect({item:singleSelection().model});config.pickCallback(singleSelection().model)">
             <i class="glyphicon glyphicon-hand-up"></i> {{'select_this' | translate}}
         </button>
 

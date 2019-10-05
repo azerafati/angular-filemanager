@@ -1,7 +1,10 @@
 app.directive('angularjsFilemanager', ['$parse', 'fileManagerConfig', function ($parse, fileManagerConfig) {
     return {
         restrict: 'E',
-        templateUrl: fileManagerConfig.tplPath + '/main.html'
+        templateUrl: fileManagerConfig.tplPath + '/main.html',
+        scope: {
+            onSelect: '&'
+        }
     };
 }]);
 

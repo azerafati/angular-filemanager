@@ -12,7 +12,7 @@ app.factory('item', ['fileManagerConfig', 'chmod', function (fileManagerConfig, 
             recursive: false,
             fullPath: function () {
                 var path = this.path.filter(Boolean);
-                return ('/' + path.join('/') + '/' + this.name).replace(/\/\//, '/');
+                return (fileManagerConfig.serverUrl + '/' + path.join('/') + '/' + this.name).replace(/\/\//, '/');
             }
         };
 

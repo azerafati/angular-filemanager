@@ -123,6 +123,7 @@ app.controller('FileManagerCtrl', [
             }
 
             if (typeof $scope.config.pickCallback === 'function' && pick) {
+                $scope.onSelect({item: item.model});
                 var callbackSuccess = $scope.config.pickCallback(item.model);
                 if (callbackSuccess === true) {
                     return;

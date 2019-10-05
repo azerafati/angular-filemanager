@@ -44,18 +44,21 @@
                         .replace('%s', item.fullPath());
                     window.alert(msg);
                 },
-
+                serverUrl: window.location.host + '/public',
                 allowedActions: angular.extend(defaults.allowedActions, {
-                    pickFiles: false,
+                    pickFiles: true,
                     pickFolders: false,
                 }),
             });
+        }]).controller('mainCtrl', ['$scope', function ($scope) {
+            $scope.fileSelectionAction = function (item) {
+                alert('== ' + item.fullPath());
+            }
         }]);
     </script>
 
     <style>
         body {
-            max-height: 100vh;
             background-color: #cdcdcd;
         }
 
@@ -74,16 +77,12 @@
                 <div class="card-header">
                     Sample Wrapper
                 </div>
-                <div class="card-body p-0" style="height: 600px">
-                    <angularjs-filemanager></angularjs-filemanager>
+                <div class="card-body p-0" style="height: 600px" ng-controller="mainCtrl">
+                    <angularjs-filemanager on-select="fileSelectionAction(item)"></angularjs-filemanager>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
-
-
 </body>
 </html>
