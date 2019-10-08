@@ -6,12 +6,7 @@ node_js:
 sudo: false
 
 before_script:
-   - nvm install 6
-   - npm install -g yarn
-   - yarn install
-
-cache:
-  yarn: true
+   - npm install
 
 script:
   - gulp lint

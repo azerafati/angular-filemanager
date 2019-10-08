@@ -18,6 +18,7 @@ const fs = require('fs');
 const replace = require('gulp-replace');
 const bulkSass = require('gulp-sass-bulk-import');
 const babel = require('gulp-babel');
+const eslint = require('gulp-eslint');
 
 const distributionFolder = 'dist/';
 
@@ -245,6 +246,7 @@ gulp.task('distribute', gulp.series('clean',
 
 
 gulp.task('lint', function () {
+    let src = 'src/';
     return gulp.src([src + 'js/app.js', src + 'js/*/*.js'])
         .pipe(eslint({
             'rules': {
@@ -255,11 +257,16 @@ gulp.task('lint', function () {
             'env': {
                 'browser': true
             },
-            'globals': {
-                'angular': true,
-                'jQuery': true
-            },
-            'extends': 'eslint:recommended'
+            'globals': [
+                'angular',
+                'jQuery'
+            ],
+            "parser": "babel-eslint",
+            "parserOptions": {
+                "sourceType": "module",
+                "allowImportExportEverywhere": false,
+                "codeFrame": true
+            }
         }))
         .pipe(eslint.format())
         .pipe(eslint.failOnError());
