@@ -7,10 +7,18 @@ This project is based on excellent work of [Jonas Sciangula Street](https://gith
 
 *By the way, we provide some example backend connectors in many languages as example (php-ftp, php-local, python, etc)*
 
-[![Build Status](https://travis-ci.org/azerafati/angularjs-filemanager.svg?branch=master)](https://travis-ci.org/azerafati/angularjs-filemanager)
+[![Build Status](https://travis-ci.com/azerafati/angularjs-filemanager.svg?branch=master)](https://travis-ci.org/azerafati/angularjs-filemanager)
+[![npm version](https://img.shields.io/npm/v/@azerafati/angularjs-filemanager.svg)](https://www.npmjs.com/package/angularjs-filemanager)
+[![GitHub issues](https://img.shields.io/github/issues/azerafati/angularjs-filemanager)](https://github.com/azerafati/angularjs-filemanager/issues)
+![Dependency Status](https://img.shields.io/david/azerafati/angularjs-filemanager)
+[![Coverage Status](https://coveralls.io/repos/github/azerafati/angularjs-filemanager/badge.svg?branch=master)](https://coveralls.io/github/azerafati/angularjs-filemanager?branch=master)
+![npm](https://img.shields.io/npm/dt/@azerafati/angularjs-filemanager)
+[![GitHub license](https://img.shields.io/github/license/azerafati/angularjs-filemanager)](https://github.com/azerafati/angularjs-filemanager/blob/master/LICENSE)
+
 
 
 ### [Try the DEMO](https://angularjs-filemanager.azerafati.com/)
+![](https://repository-images.githubusercontent.com/59879464/8605c980-e2f2-11e9-8d42-57f40cd27d8c "AngularJS File Manager")
 ---------
 
 ### Install
