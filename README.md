@@ -1,13 +1,7 @@
-
 # AngularJS File Manager
 
-This is a pretty handy file manager to explore your files on the server in the browser developed in AngularJS using Bootstrap 4
 
-This project is based on excellent work of [Jonas Sciangula Street](https://github.com/joni2back), but since he's not planning to maintain it I'm moving forward with my own fork. provides a web file manager interface, **allowing you to create your own backend connector** following the [connector API](API.md). 
-
-*By the way, we provide some example backend connectors in many languages as example (php-ftp, php-local, python, etc)*
-
-[![Build Status](https://travis-ci.com/azerafati/angularjs-filemanager.svg?branch=master)](https://travis-ci.org/azerafati/angularjs-filemanager)
+[![Build Status](https://travis-ci.com/azerafati/angularjs-filemanager.svg?branch=master)](https://travis-ci.com/azerafati/angularjs-filemanager)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8750d04905bd484fa7d422536558f492)](https://www.codacy.com/manual/azerafati/angularjs-filemanager?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=azerafati/angularjs-filemanager&amp;utm_campaign=Badge_Grade)
 [![npm version](https://img.shields.io/npm/v/@azerafati/angularjs-filemanager.svg)](https://www.npmjs.com/package/angularjs-filemanager)
 [![GitHub issues](https://img.shields.io/github/issues/azerafati/angularjs-filemanager)](https://github.com/azerafati/angularjs-filemanager/issues)
@@ -15,6 +9,14 @@ This project is based on excellent work of [Jonas Sciangula Street](https://gith
 [![Coverage Status](https://coveralls.io/repos/github/azerafati/angularjs-filemanager/badge.svg?branch=master)](https://coveralls.io/github/azerafati/angularjs-filemanager?branch=master)
 ![npm](https://img.shields.io/npm/dt/@azerafati/angularjs-filemanager)
 [![GitHub license](https://img.shields.io/github/license/azerafati/angularjs-filemanager)](https://github.com/azerafati/angularjs-filemanager/blob/master/LICENSE)
+
+
+This is a minimal and light-weight file manager to explore your files on the server developed in AngularJS using Bootstrap 4
+
+This project is based on excellent work of [Jonas Sciangula Street](https://github.com/joni2back), but since he's not planning to maintain it I'm moving forward with my own fork.  
+
+*There are example backend connectors in (e.g. PHP, PHP-FTP, Python, Java) or you can create your own backend connector following the [connector API](API.md).*
+
 
 
 

@@ -1,12 +1,9 @@
-language: node_js 
-
+language: node_js
 node_js:
-  - 6
-  
-sudo: false
+  - "10"
 
 before_script:
-   - npm install
+  - npm install
 
 script:
   - gulp lint
